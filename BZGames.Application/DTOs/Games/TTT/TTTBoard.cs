@@ -23,11 +23,14 @@ namespace BZGames.Application.DTOs.Games.TTT
 
         public bool IsFull()
         {
-            for (int col = 0; col < Columns; col++)
+            for (int row = 0; row < Rows; row++)
             {
-                if (Layout[0][col] == TTTPiece.Empty)
+                for (int col = 0; col < Columns; col++)
                 {
-                    return false;
+                    if (Layout[row][col] == TTTPiece.Empty)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;

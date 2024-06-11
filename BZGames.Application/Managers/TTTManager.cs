@@ -40,15 +40,15 @@ namespace BZGames.Application.Managers
         {
             var matchEntry = Lobbies.Values.FirstOrDefault(m => m.Id == match.Id);
 
-            matchEntry.Players.Clear();
-
             matchEntry.Players.ForEach(p =>
             {
                 p.Piece = TTTPiece.Empty;
             });
 
+            matchEntry.Players.Clear();
 
             bool result = Lobbies.Remove(matchEntry.Id);
+            Console.WriteLine($"Deleting {match.Name} was {result}");
         }
 
         public void AddPlayerToLobby(TTTMatch match, TTTPlayer player, TTTPiece piece)

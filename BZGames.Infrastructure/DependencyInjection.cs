@@ -57,7 +57,7 @@ namespace BZGames.Infrastructure
                         var accessToken = context.Request.Query["access_token"];
 
                         var path = context.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/rpsGame") || (path.StartsWithSegments("/c4Game") || (path.StartsWithSegments("/tttGame")))))
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/rpsGame") || (path.StartsWithSegments("/c4Game") || (path.StartsWithSegments("/tttGame") || (path.StartsWithSegments("/btsGame"))))))
                         {
                             context.Token = accessToken;
                         }
