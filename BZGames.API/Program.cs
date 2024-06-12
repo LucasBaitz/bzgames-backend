@@ -52,6 +52,7 @@ app.MapControllers();
 app.MapHub<RPSHub>("/rpsGame");
 app.MapHub<C4Hub>("/c4Game");
 app.MapHub<TTTHub>("/tttGame");
+app.MapHub<BTSHub>("/btsGame");
 app.MapHub<GRCHub>("/grcHub");
 
 app.Run();

@@ -69,6 +69,7 @@ namespace BZGames.API.Hubs
 
             _logger.LogInformation($"Match: {match.XPlayer.UserName} {match.CurrentPlayer.UserName} {match.CurrentPlayer.Piece}");
 
+
             await Groups.AddToGroupAsync(Context.ConnectionId, match.Name);
             await Clients.Caller.SendAsync("LobbyCreated", match.Name);
         }
@@ -145,6 +146,14 @@ namespace BZGames.API.Hubs
             if (tie)
             {
                 await Clients.Group(match.Name).SendAsync("Tie");
+
+                foreach (TTTPlayer player in match.Players)
+                {
+                    _logger.LogInformation($"Removing {player.UserName} from {match.Name} group");
+                    await Groups.RemoveFromGroupAsync(player.ConnectionId, match.Name);
+                }
+
+                _gameManager.DeleteMatch(match);
             }
 
             if (winningPiece is not null)
@@ -182,9 +191,8 @@ namespace BZGames.API.Hubs
             {
                 _logger.LogInformation($"Removing {player.UserName} from {match.Name} group");
                 await Groups.RemoveFromGroupAsync(player.ConnectionId, match.Name);
+                _gameManager.ResetPlayer(player);
             }
-
-            match.Players.ForEach(_gameManager.ResetPlayer);
 
             _gameManager.DeleteMatch(match);
         }
